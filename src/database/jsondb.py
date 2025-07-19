@@ -43,11 +43,13 @@ class JsonDB:
             json.dump({'items': [], 'next_id': 1}, f, indent=2)
 
     def save(self):
-        """Сохраняет данные, гарантируя наличие id"""
+        """
+        Сохраняет данные, гарантируя наличие id
+        """
         items = []
         for item in self.table.records:
             item_data = item.model_dump()
-            # Явно добавляем id, если оно есть в объекте
+
             if hasattr(item, 'id'):
                 item_data['id'] = item.id
             items.append(item_data)
@@ -72,7 +74,9 @@ class JsonDB:
         return new_item
 
     def get(self, id_: int) -> BaseModel | None:
-        """Возвращает объект по ID или None если не найден"""
+        """
+        Возвращает объект по ID или None если не найден
+        """
         for item in self.table.records:
             if hasattr(item, 'id') and item.id == id_:
                 return item
