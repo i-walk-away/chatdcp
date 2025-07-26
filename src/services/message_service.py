@@ -8,18 +8,28 @@ class MessageService:
     def __init__(self, repository: MessageRepository):
         self.repository = repository
 
-    def get(self, message_id) -> None | Message:
+    def get_by_id(self, message_id: int) -> None | Message:
         """
         Gets a Message by id from the database
 
         :param message_id: message id
         :return: Message
         """
-        message = self.repository.get(message_id)
+        message = self.repository.get_by_id(message_id)
         if not message:
             return None
 
         return message
+
+    def get_all(self) -> None | list[Message]:
+        """
+        Gets all messages from the databes
+
+        :return:
+        """
+        messages = self.repository.get_all()
+        return messages
+
 
     def add(self, data: SendMessageData) -> Message:
         """

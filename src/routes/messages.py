@@ -14,3 +14,18 @@ def send_message(
 ):
     message = service.add(data)
     return message
+
+@router.get(path='/', summary='Get all messages')
+def get_messages(
+        service: MessageService = Depends(get_message_service)
+):
+    messages = service.get_all()
+    return messages
+
+@router.get(path='/{message_id}', summary='Get message by id')
+def get_message_by_id(
+        message_id: int,
+        service: MessageService = Depends(get_message_service)
+):
+    message = service.get_by_id(message_id)
+    return message

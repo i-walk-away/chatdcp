@@ -1,19 +1,21 @@
 import json
 from pathlib import Path
-from typing import Type
+from typing import TypeVar, Generic
 
 from pydantic import BaseModel
 
+ModelType = TypeVar('ModelType', bound=BaseModel)
 
-class Table:
+
+class Table(Generic[ModelType]):
     """
     Pure data container representing a table
     """
 
-    def __init__(self, model: Type[BaseModel], table_name: str):
+    def __init__(self, model: type[ModelType], table_name: str):
         self.table_name = table_name
         self.model = model
-        self.records: list[BaseModel] = []
+        self.records: list[ModelType] = []
         self.next_id = 1
 
 
@@ -23,7 +25,7 @@ class JsonDB:
     """
     BASE_DIR = r"C:\Users\New\Desktop\kai\vs\chatdcp\src\database\tables"
 
-    def __init__(self, model: Type[BaseModel], table_name: str):
+    def __init__(self, model: type[ModelType], table_name: str):
         self.path = Path(f"{self.BASE_DIR}/{table_name}.json")
         self.table = Table(model, table_name)
         self._load()
@@ -62,7 +64,7 @@ class JsonDB:
         with open(self.path, 'w') as f:
             json.dump(data, f, indent=2, ensure_ascii=False, default=str)
 
-    def insert(self, item: BaseModel) -> BaseModel:
+    def insert(self, item: ModelType) -> ModelType:
         table = self.table
         item_data = item.model_dump()
         item_data['id'] = table.next_id
@@ -73,7 +75,7 @@ class JsonDB:
         self.save()
         return new_item
 
-    def get(self, id_: int) -> BaseModel | None:
+    def get_by_id(self, id_: int) -> ModelType | None:
         """
         Возвращает объект по ID или None если не найден
         """
@@ -91,5 +93,10 @@ class JsonDB:
                 return True
         return False
 
-    def get_all(self) -> list[BaseModel]:
-        return self.table.records.copy()
+    def get_all(self) -> list[ModelType]:
+        items: list[ModelType] = []
+
+        for item in self.table.records:
+            items.append(item)
+
+        return items
