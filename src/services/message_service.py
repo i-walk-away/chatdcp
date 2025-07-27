@@ -30,7 +30,6 @@ class MessageService:
         messages = self.repository.get_all()
         return messages
 
-
     def add(self, data: SendMessageData) -> Message:
         """
         Create a new Message instance

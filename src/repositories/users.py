@@ -10,9 +10,12 @@ class UserRepository:
     def create(self, model: User):
         self.db.insert(model)
 
-    def get(self, id_: int) -> None | User:
+    def get_by_id(self, id_: int) -> None | User:
         try:
             return self.db.get_by_id(id_)
         except Exception as e:
-            logger.error(f'failed to find an item with the id {id_} in database: {e}')
+            logger.error(f'failed to find a User with the id {id_} in database: {e}')
             return None
+
+    def get_all(self) -> list[User]:
+        return self.db.get_all()

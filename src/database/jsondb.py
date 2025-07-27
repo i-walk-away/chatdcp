@@ -21,7 +21,7 @@ class Table(Generic[ModelType]):
 
 class JsonDB:
     """
-    Database with all data operations
+    Database with all data operations. Stores data in JSON and works with pydantic models.
     """
     BASE_DIR = r"C:\Users\New\Desktop\kai\vs\chatdcp\src\database\tables"
 
@@ -41,12 +41,15 @@ class JsonDB:
             self.table.next_id = data['next_id']
 
     def create_table_json_file(self):
+        """
+        Creates a JSON file representating an instance of Table.
+        """
         with open(self.path, 'w') as f:
             json.dump({'items': [], 'next_id': 1}, f, indent=2)
 
     def save(self):
         """
-        Сохраняет данные, гарантируя наличие id
+        Saves Table data to a JSON file.
         """
         items = []
         for item in self.table.records:
@@ -65,6 +68,9 @@ class JsonDB:
             json.dump(data, f, indent=2, ensure_ascii=False, default=str)
 
     def insert(self, item: ModelType) -> ModelType:
+        """
+        Inserts a record into the table.
+        """
         table = self.table
         item_data = item.model_dump()
         item_data['id'] = table.next_id
@@ -77,7 +83,7 @@ class JsonDB:
 
     def get_by_id(self, id_: int) -> ModelType | None:
         """
-        Возвращает объект по ID или None если не найден
+        Returns a record by id.
         """
         for item in self.table.records:
             if hasattr(item, 'id') and item.id == id_:
@@ -85,6 +91,9 @@ class JsonDB:
         return None
 
     def delete(self, id_: int) -> bool:
+        """
+        Removes a record by id.
+        """
         table = self.table
         for i, item in enumerate(table.records):
             if item.id == id_:
@@ -94,6 +103,9 @@ class JsonDB:
         return False
 
     def get_all(self) -> list[ModelType]:
+        """
+        Returns all records from the table.
+        """
         items: list[ModelType] = []
 
         for item in self.table.records:

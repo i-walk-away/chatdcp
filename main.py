@@ -5,9 +5,11 @@ from src.routes import messages
 
 
 
+
 app = FastAPI()
 
 app.include_router(messages.router)
+
 
 
 
