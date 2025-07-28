@@ -1,18 +1,17 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from src.models.dto.user import User
+from src.models.dto.user import UserDTO
 
 
-class Message(BaseModel):
-    id: int | None = Field(default=None, exclude=True)  # Поле для БД, исключается из схемы
-    sender: User
+class MessageDTO(BaseModel):
+    sender: UserDTO
     contents: str
     timestamp: datetime
-    status: str
+    is_read: bool = False
 
 
 class SendMessageData(BaseModel):
-    sender: User
+    sender: UserDTO
     contents: str

@@ -1,10 +1,11 @@
-from src.models.dto.message import SendMessageData
-from src.models.dto.user import User
-
-chmo = User(username='ev')
-msg = SendMessageData(sender=chmo, contents='heheheha')
+from pydantic import BaseModel
+from sqlalchemy.orm import DeclarativeBase
 
 
-class Base:
-    def __init__(self):
+class Base(DeclarativeBase):
+
+    def to_dto(self) -> BaseModel:
+        """
+        Converts a database model into a BaseModel DTO object.
+        """
         pass
