@@ -39,13 +39,15 @@ class MessageService:
         to create an instance of ``Message``
         :return: ``Message`` instance
         """
+
         message = Message(
             contents=data.contents,
-            sender=data.sender,
             sender_id=data.sender.id
         )
 
         await self.repository.add(message)
         await self.repository.session.commit()
+
+        await self.repository.session.refresh(message)
 
         return message.to_dto()

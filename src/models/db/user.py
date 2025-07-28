@@ -15,5 +15,6 @@ class User(Base):
     def to_dto(self) -> UserDTO:
         return UserDTO(
             username=self.username,
-            gangster=self.gangster
+            gangster=self.gangster,
+            id=self.id
         )

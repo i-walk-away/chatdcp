@@ -19,7 +19,7 @@ class Message(Base):
         server_default=func.now()
     )
 
-    sender: Mapped['User'] = relationship()
+    sender: Mapped['User'] = relationship(lazy='joined')
     sender_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     def to_dto(self) -> MessageDTO:
