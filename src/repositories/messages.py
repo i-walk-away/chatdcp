@@ -1,8 +1,6 @@
 from sqlalchemy import select
 
-from src.core.exceptions import MessageNotFound
 from src.models.db.message import Message
-from src.models.db.user import User
 from src.repositories.base import BaseRepository
 
 
@@ -21,4 +19,3 @@ class MessageRepository(BaseRepository):
         result = await self.session.scalars(statement)
 
         return list(result)
-
