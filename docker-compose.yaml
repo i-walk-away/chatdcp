@@ -1,0 +1,30 @@
+services:
+  backend:
+    image: chatdcp_backend
+    build: .
+    container_name: chatdcp_backend_container
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8000:${APP_PORT}"
+
+  database:
+    image: mysql:9.3
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
