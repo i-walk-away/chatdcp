@@ -1,33 +1,55 @@
 from fastapi import APIRouter, Depends
 
-from src.dependencies.services.message_service import get_message_service
-from src.models.dto.message import SendMessageData
+from src.core.dependencies.services.message_service import get_message_service
+from src.models.dto.message import SendMessageData, MessageDTO
 from src.services.message_service import MessageService
 
 router = APIRouter(prefix='/messages')
 
 
 @router.post(path='/', summary='Create new message')
-def send_message(
+async def send_message(
         data: SendMessageData,
-        service: MessageService = Depends(get_message_service)
-):
-    message = service.add(data)
+        message_service: MessageService = Depends(get_message_service)
+) -> MessageDTO:
+    """
+    Create a new message.
+
+    :param data: SendMessageData instance containing all information neccessary to
+        create a new message.
+    :param message_service: Injected logic layer responsible for all Message operations.
+
+    :return: ``MessageDTO`` object representing a created message.
+    """
+    message = await message_service.add(data)
     return message
 
 
 @router.get(path='/', summary='Get all messages')
-def get_messages(
+async def get_messages(
         service: MessageService = Depends(get_message_service)
-):
-    messages = service.get_all()
+) -> list[MessageDTO]:
+    """
+    Gets all messages.
+
+    :param service: Injected logic layer responsible for all Message operations.
+
+    :return: List of ``MessageDTO`` objects representing the messages.
+    """
+    messages = await service.get_all()
     return messages
 
 
 @router.get(path='/{message_id}', summary='Get message by id')
-def get_message_by_id(
+async def get_message_by_id(
         message_id: int,
         service: MessageService = Depends(get_message_service)
-):
-    message = service.get_by_id(message_id)
+) -> MessageDTO:
+    """
+    Gets a message by the given ID.
+
+    :param message_id: ID of a message
+    :param service: Injected logic layer responsible for all Message operations.
+    """
+    message = await service.get_by_id(message_id)
     return message

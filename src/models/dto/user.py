@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
-class User(BaseModel):
-    id: int | None = Field(default=None, exclude=True)  # Поле для БД, исключается из схемы
+class UserDTO(BaseModel):
+    id: int
     username: str
     gangster: bool = False

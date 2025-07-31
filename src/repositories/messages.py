@@ -1,21 +1,21 @@
-from src.database.jsondb import JsonDB
-from src.models.dto.message import Message
-from src.utils.logger.logger import logger
+from sqlalchemy import select
+
+from src.models.db.message import Message
+from src.repositories.base import BaseRepository
 
 
-class MessageRepository:
-    def __init__(self):
-        self.db = JsonDB(Message, 'Message')
+class MessageRepository(BaseRepository):
+    async def add(self, model: Message) -> None:
+        self.session.add(model)
 
-    def create(self, model: Message):
-        self.db.insert(model)
+    async def get_by_id(self, id_: int) -> Message | None:
+        statement = select(Message).where(Message.id == id_)
+        result = await self.session.scalar(statement)
 
-    def get_by_id(self, id_: int) -> None | Message:
-        try:
-            return self.db.get_by_id(id_)
-        except Exception as e:
-            logger.error(f'failed to find an item with the id {id_} in database: {e}')
-            return None
+        return result
 
-    def get_all(self) -> list[Message]:
-        return self.db.get_all()
+    async def get_all(self) -> list[Message]:
+        statement = select(Message)
+        result = await self.session.scalars(statement)
+
+        return list(result)

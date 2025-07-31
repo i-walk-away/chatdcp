@@ -1,21 +1,21 @@
-from src.database.jsondb import JsonDB
-from src.models.dto.user import User
-from src.utils.logger.logger import logger
+from sqlalchemy import select
+
+from src.models.db.user import User
+from src.repositories.base import BaseRepository
 
 
-class UserRepository:
-    def __init__(self):
-        self.db = JsonDB(User, 'User')
+class UserRepository(BaseRepository):
+    async def add(self, model: User) -> None:
+        self.session.add(model)
 
-    def create(self, model: User):
-        self.db.insert(model)
+    async def get_by_id(self, id_: int) -> User | None:
+        statement = select(User).where(User.id == id_)
+        result = await self.session.scalar(statement)
 
-    def get_by_id(self, id_: int) -> None | User:
-        try:
-            return self.db.get_by_id(id_)
-        except Exception as e:
-            logger.error(f'failed to find a User with the id {id_} in database: {e}')
-            return None
+        return result
 
-    def get_all(self) -> list[User]:
-        return self.db.get_all()
+    async def get_all(self) -> list[User]:
+        statement = select(User)
+        result = await self.session.scalars(statement)
+
+        return list(result)

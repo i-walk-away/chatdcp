@@ -1,6 +1,6 @@
 from fastapi import Depends
 
-from src.dependencies.repositories.message_repository import get_message_repository
+from src.core.dependencies.repositories.message_repository import get_message_repository
 from src.repositories.messages import MessageRepository
 from src.services.message_service import MessageService
 
