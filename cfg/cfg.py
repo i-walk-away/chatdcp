@@ -19,6 +19,12 @@ class Database(BaseSettings):
         return f"mysql+aiomysql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
 
 
+class Auth(BaseSettings):
+    jwt_secret_key: str = Field(alias="JWT_SECRET_KEY")
+    jwt_algorithm: str = Field(alias='JWT_ALGORITHM')
+    jwt_lifespan: int = Field(alias='JWT_LIFESPAN')  # in minutes
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -26,6 +32,7 @@ class Settings(BaseSettings):
     )
 
     database: Database = Field(default_factory=Database)
+    auth: Auth = Field(default_factory=Auth)
 
 
 settings = Settings()

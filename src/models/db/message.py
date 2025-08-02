@@ -1,10 +1,9 @@
 from datetime import datetime
 
 from sqlalchemy import String, ForeignKey, DateTime, func
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from src.models.db.base import Base
-from src.models.db.user import User
 from src.models.dto.message import MessageDTO
 
 
@@ -19,12 +18,12 @@ class Message(Base):
         server_default=func.now()
     )
 
-    sender: Mapped['User'] = relationship(lazy='joined')
+    # sender: Mapped['User'] = relationship(lazy='joined')
     sender_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     def to_dto(self) -> MessageDTO:
         return MessageDTO(
-            sender=self.sender.to_dto(),
+            sender_id=self.sender_id,
             contents=self.contents,
             timestamp=self.timestamp
         )
