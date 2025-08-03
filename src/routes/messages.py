@@ -6,7 +6,7 @@ from src.models.dto.message import SendMessageData, MessageDTO
 from src.models.dto.user import UserDTO
 from src.services.message_service import MessageService
 
-router = APIRouter(prefix='/messages')
+router = APIRouter(prefix='/messages', tags=['Messages'])
 
 
 @router.post(path='/', summary='Create new message')

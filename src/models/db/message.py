@@ -23,6 +23,7 @@ class Message(Base):
 
     def to_dto(self) -> MessageDTO:
         return MessageDTO(
+            message_id=self.id,
             sender_id=self.sender_id,
             contents=self.contents,
             timestamp=self.timestamp

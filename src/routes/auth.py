@@ -5,7 +5,7 @@ from src.core.dependencies.services.auth_service import get_auth_service
 from src.models.dto.auth import LoginResponse, LoginCredentials
 from src.services.auth_service import AuthService
 
-router = APIRouter(prefix='/auth')
+router = APIRouter(prefix='/auth', tags=['Auth'])
 
 
 @router.post(path='/login', summary='login')

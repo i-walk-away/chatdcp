@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 from src.routes import messages, users, auth
 
-app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"operationsSorter": "method"})
 
 app.include_router(messages.router)
 app.include_router(users.router)
