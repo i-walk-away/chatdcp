@@ -4,10 +4,22 @@ from src.core.dependencies.services.user_service import get_user_service
 from src.models.dto.user import CreateUserData, UserDTO
 from src.services.user_service import UserService
 
-router = APIRouter(prefix='/user')
+router = APIRouter(prefix='/user', tags=['Users'])
 
 
-@router.post(path='/create', summary='Create a new user', tags=['Users'])
+
+@router.get(path='', summary='Get all users')
+async def get_users(
+        user_service: UserService = Depends(get_user_service)
+) -> list[UserDTO]:
+    """
+    Gets list of all users.
+    """
+    users = await user_service.get_all()
+    return users
+
+
+@router.post(path='/create', summary='Create a new user')
 async def create_user(
         user_data: CreateUserData,
         user_service: UserService = Depends(get_user_service)
@@ -22,3 +34,4 @@ async def create_user(
     """
     user = await user_service.create_user(data=user_data)
     return user
+

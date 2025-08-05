@@ -9,7 +9,7 @@ from src.services.message_service import MessageService
 router = APIRouter(prefix='/messages', tags=['Messages'])
 
 
-@router.post(path='/', summary='Create new message')
+@router.post(path='', summary='Create new message')
 async def send_message(
         data: SendMessageData,
         message_service: MessageService = Depends(get_message_service),
@@ -29,7 +29,7 @@ async def send_message(
     return message
 
 
-@router.get(path='/', summary='Get all messages')
+@router.get(path='', summary='Get all messages')
 async def get_messages(
         service: MessageService = Depends(get_message_service)
 ) -> list[MessageDTO]:

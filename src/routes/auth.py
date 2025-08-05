@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-from fastapi.security import OAuth2PasswordRequestForm
 
 from src.core.dependencies.services.auth_service import get_auth_service
 from src.models.dto.auth import LoginResponse, LoginCredentials
@@ -10,17 +9,21 @@ router = APIRouter(prefix='/auth', tags=['Auth'])
 
 @router.post(path='/login', summary='login')
 async def login(
-        # credentials: LoginCredentials,
-        form_data: OAuth2PasswordRequestForm = Depends(),
+        credentials: LoginCredentials,
         auth_service: AuthService = Depends(get_auth_service)
 ) -> LoginResponse:
     """
-    docstig
+    # Mardkdown docstring
+    This is a test to see how SwaggerUI handles MD dosctring formatting.
+
+    ## Args
+    `codeblock` -  description \n
+    `cia` - argument description \n
     """
-    credentials = LoginCredentials(
-        username=form_data.username,
-        plain_password=form_data.password
-    )
+    # credentials = LoginCredentials(
+    #     username=credentials.username,
+    #     plain_password=credentials.password
+    # )
     jwt_token = await auth_service.login(credentials=credentials)
 
     return LoginResponse(access_token=jwt_token)

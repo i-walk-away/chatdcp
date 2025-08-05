@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class MessageDTO(BaseModel):
-    message_id: int
+    id: int
     sender_id: int
     contents: str
     timestamp: datetime
