@@ -1,12 +1,19 @@
 from src.core.exceptions import MessageNotFound
 from src.models.db.message import Message
 from src.models.dto.message import MessageDTO, SendMessageData
+from src.models.dto.user import UserDTO
 from src.repositories.messages import MessageRepository
+from src.repositories.users import UserRepository
 
 
 class MessageService:
-    def __init__(self, repository: MessageRepository):
+    def __init__(
+            self,
+            repository: MessageRepository,
+            user_repository: UserRepository,
+    ):
         self.repository = repository
+        self.user_repository = user_repository
 
     async def get_by_id(self, message_id: int) -> MessageDTO:
         """
@@ -25,24 +32,30 @@ class MessageService:
         """
         Gets all ``Messages`` from the databes
 
-        :return: list of MessageDTO
+        :return: list of ``MessageDTO``
         """
         messages = await self.repository.get_all()
 
         return [message.to_dto() for message in messages]
 
-    async def add(self, data: SendMessageData) -> MessageDTO:
+    async def send_message(
+            self,
+            message_data: SendMessageData,
+            sender_data: UserDTO
+    ) -> MessageDTO:
         """
         Create a new ``Message`` instance
 
-        :param data: ``SendMessageData`` object containing data neccessary
+        :param sender_data: ``UserDTO`` object representing the user that has sent the message.
+        :param message_data: ``SendMessageData`` object containing data neccessary
         to create an instance of ``Message``
         :return: ``Message`` instance
         """
+        sender = await self.user_repository.get_by_id(sender_data.id)
 
         message = Message(
-            contents=data.contents,
-            sender_id=data.sender.id
+            contents=message_data.contents,
+            sender=sender
         )
 
         await self.repository.add(message)

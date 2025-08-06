@@ -6,6 +6,7 @@ from src.models.dto.user import UserDTO
 
 
 class MessageDTO(BaseModel):
+    id: int
     sender: UserDTO
     contents: str
     timestamp: datetime
@@ -13,5 +14,4 @@ class MessageDTO(BaseModel):
 
 
 class SendMessageData(BaseModel):
-    sender: UserDTO
     contents: str

@@ -12,4 +12,4 @@ def get_message_repository(
     Constructs an instance of MessageRepository with AsyncSession injected
     """
 
-    return MessageRepository(session)
+    return MessageRepository(session=session)

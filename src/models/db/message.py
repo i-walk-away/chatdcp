@@ -12,7 +12,7 @@ class Message(Base):
     __tablename__ = 'messages'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    contents: Mapped[str] = mapped_column(String(length=255))
+    contents: Mapped[str] = mapped_column(String(length=1941))
 
     timestamp: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -24,6 +24,7 @@ class Message(Base):
 
     def to_dto(self) -> MessageDTO:
         return MessageDTO(
+            id=self.id,
             sender=self.sender.to_dto(),
             contents=self.contents,
             timestamp=self.timestamp
