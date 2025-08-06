@@ -3,11 +3,17 @@ from src.models.db.message import Message
 from src.models.dto.message import MessageDTO, SendMessageData
 from src.models.dto.user import UserDTO
 from src.repositories.messages import MessageRepository
+from src.repositories.users import UserRepository
 
 
 class MessageService:
-    def __init__(self, repository: MessageRepository):
+    def __init__(
+            self,
+            repository: MessageRepository,
+            user_repository: UserRepository,
+    ):
         self.repository = repository
+        self.user_repository = user_repository
 
     async def get_by_id(self, message_id: int) -> MessageDTO:
         """
@@ -35,20 +41,21 @@ class MessageService:
     async def send_message(
             self,
             message_data: SendMessageData,
-            sender: UserDTO
+            sender_data: UserDTO
     ) -> MessageDTO:
         """
         Create a new ``Message`` instance
 
-        :param sender: ``UserDTO`` object representing the user that has sent the message.
+        :param sender_data: ``UserDTO`` object representing the user that has sent the message.
         :param message_data: ``SendMessageData`` object containing data neccessary
         to create an instance of ``Message``
         :return: ``Message`` instance
         """
+        sender = await self.user_repository.get_by_id(sender_data.id)
 
         message = Message(
             contents=message_data.contents,
-            sender_id=sender.id
+            sender=sender
         )
 
         await self.repository.add(message)

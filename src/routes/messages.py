@@ -25,7 +25,7 @@ async def send_message(
 
     :return: ``MessageDTO`` object representing a created message.
     """
-    message = await message_service.send_message(message_data=data, sender=user)
+    message = await message_service.send_message(message_data=data, sender_data=user)
     return message
 
 
