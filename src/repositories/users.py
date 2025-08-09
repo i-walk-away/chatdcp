@@ -12,7 +12,7 @@ class UserRepository(BaseRepository):
         statement = select(User)
         result = await self.session.scalars(statement)
 
-        return list(result)
+        return list(result.unique())
 
     async def get_by_username(self, username: str) -> User | None:
         statement = select(User).where(User.username == username)
@@ -20,8 +20,8 @@ class UserRepository(BaseRepository):
 
         return result
 
-    async def get_by_id(self, id_: int) -> User | None:
-        statement = select(User).where(User.id == id_)
+    async def get_by_id(self, user_id: int) -> User | None:
+        statement = select(User).where(User.id == user_id)
         result = await self.session.scalar(statement)
 
         return result

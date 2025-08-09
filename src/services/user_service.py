@@ -24,14 +24,14 @@ class UserService:
 
         return user.to_dto()
 
-    async def get_by_id(self, id_: int) -> UserDTO:
+    async def get_by_id(self, user_id: int) -> UserDTO:
         """
         Get a user by id from the database.
 
-        :param id_: user's id
+        :param user_id: user's id
         :return: UserDTO representing a user.
         """
-        user = await self.repository.get_by_id(id_=id_)
+        user = await self.repository.get_by_id(user_id=user_id)
 
         if not user:
             raise UserNotFound
@@ -76,3 +76,13 @@ class UserService:
         await self.repository.session.refresh(user)
 
         return user.to_dto()
+
+    # async def get_user_info(self, user_id: int) -> UserDTO:
+    #     """
+    #     Gets given User's info.
+    #
+    #     :param user_id: user's ID
+    #     :return: `UserDTO` object representing
+    #     """
+    #     user = await self.repository.get_by_id(id_=user_id)
+    #     return user.to_dto()

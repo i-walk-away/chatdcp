@@ -31,17 +31,29 @@ async def send_message(
 
 @router.get(path='', summary='Get all messages')
 async def get_messages(
+        chat_id: int,
         service: MessageService = Depends(get_message_service)
 ) -> list[MessageDTO]:
     """
-    Gets all messages.
+    Gets all messages from the given Chat.
 
+    :param chat_id: to be refactored for markdown docstrings
     :param service: Injected logic layer responsible for all Message operations.
 
     :return: List of ``MessageDTO`` objects representing the messages.
     """
-    messages = await service.get_all()
+    messages = await service.get_all_from_chat(chat_id)
     return messages
+
+
+@router.get(path='/unread_messages', summary='Get all unread messages')
+async def get_unread_messages(
+        user: UserDTO = Depends(get_user_from_jwt),
+        service: MessageService = Depends(get_message_service)
+) -> list[MessageDTO]:
+    unread_messages = await service.get_unreads_from_all_chats(user=user)
+
+    return unread_messages
 
 
 @router.get(path='/{message_id}', summary='Get message by id')
