@@ -20,10 +20,6 @@ async def login(
     `codeblock` -  description \n
     `cia` - argument description \n
     """
-    # credentials = LoginCredentials(
-    #     username=credentials.username,
-    #     plain_password=credentials.password
-    # )
     jwt_token = await auth_service.login(credentials=credentials)
 
     return LoginResponse(access_token=jwt_token)

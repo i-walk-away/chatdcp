@@ -1,5 +1,5 @@
 from fastapi import Depends
-from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jwt import decode
 from jwt.exceptions import InvalidTokenError
 
