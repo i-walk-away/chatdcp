@@ -21,7 +21,7 @@ class Message(Base):
 
     contents: Mapped[str] = mapped_column(String(length=1941))
 
-    reply_to: Mapped[int] = mapped_column()
+    reply_to: Mapped[int] = mapped_column(nullable=True)
     timestamp: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now()

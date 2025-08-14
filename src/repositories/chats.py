@@ -20,3 +20,8 @@ class ChatRepository(BaseRepository):
         result = await self.session.scalars(statement)
 
         return list(result.unique())
+
+    async def delete(self, chat_id: int) -> None:
+        chat = self.get_by_id(chat_id)
+
+        await self.session.delete(chat)

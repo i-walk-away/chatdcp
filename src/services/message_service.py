@@ -2,9 +2,9 @@ from src.core.exceptions import MessageNotFound, ChatNotFound
 from src.models.db.message import Message
 from src.models.dto.message import MessageDTO, SendMessageData
 from src.models.dto.user import UserDTO
+from src.repositories.chats import ChatRepository
 from src.repositories.messages import MessageRepository
 from src.repositories.users import UserRepository
-from src.services.chat_service import ChatService
 
 
 class MessageService:
@@ -12,11 +12,11 @@ class MessageService:
             self,
             repository: MessageRepository,
             user_repository: UserRepository,
-            chat_service: ChatService
+            chat_repository: ChatRepository
     ):
         self.repository = repository
         self.user_repository = user_repository
-        self.chat_service = chat_service
+        self.chat_repository = chat_repository
 
     async def get_by_id(self, message_id: int) -> MessageDTO:
         """
@@ -49,7 +49,7 @@ class MessageService:
         return [message.to_dto() for message in unread_messages]
 
     async def get_unreads_from_all_chats(self, user: UserDTO) -> list[MessageDTO]:
-        chats_to_fetch = await self.chat_service.get_users_chats(user=user)
+        chats_to_fetch = await self.chat_repository.get_chats_by_user_id(user_id=user.id)
         chat_ids = [chat.id for chat in chats_to_fetch]
 
         unread_messages: list[MessageDTO] = []

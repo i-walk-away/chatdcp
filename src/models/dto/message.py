@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -22,7 +23,7 @@ class MessageDTO(BaseModel):
     sender: UserDTO
     contents: str
 
-    reply_to: int
+    reply_to: Optional[int] = None
 
     timestamp: datetime
     is_read: bool = False
@@ -32,11 +33,10 @@ class SendMessageData(BaseModel):
     """
     Object containing the data neccessary to construct a ``Message``.
 
-    :var chat: ChatDTO object representing the ``Chat`` where the message belongs.
     :var contents: The contents of the message. Essentially the message itself.
     :var reply_to: Reference to the Message this one is a reply to.
     """
     chat_id: int
     contents: str
 
-    reply_to: int
+    reply_to: Optional[int] = None

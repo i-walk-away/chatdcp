@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from src.core.dependencies.security.user import get_user_from_jwt
 from src.core.dependencies.services.chat_service import get_chat_service
 from src.core.dependencies.services.user_service import get_user_service
-from src.models.dto.chat import ChatDTO
+from src.models.dto.chat import ChatOverview
 from src.models.dto.user import CreateUserData, UserDTO
 from src.services.chat_service import ChatService
 from src.services.user_service import UserService
@@ -40,13 +40,13 @@ async def get_current_user_profile(
 async def get_current_users_chats(
         user: UserDTO = Depends(get_user_from_jwt),
         chat_service: ChatService = Depends(get_chat_service)
-) -> list[ChatDTO]:
+) -> list[ChatOverview]:
     """
     docst
     """
-    chats = await chat_service.get_users_chats(user=user)
+    overviews = await chat_service.get_users_chats(user=user)
 
-    return chats
+    return overviews
 
 
 @router.post(path='/create', summary='Create a new user')

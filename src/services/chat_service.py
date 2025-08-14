@@ -1,6 +1,6 @@
 from src.core.exceptions import UserNotFound
 from src.models.db import Chat, User
-from src.models.dto.chat import ChatDTO, CreateChatData
+from src.models.dto.chat import ChatDTO, CreateChatData, ChatOverview
 from src.models.dto.user import UserDTO
 from src.repositories.chats import ChatRepository
 from src.repositories.users import UserRepository
@@ -54,12 +54,15 @@ class ChatService:
 
         return chat.to_dto()
 
-    async def get_users_chats(self, user: UserDTO) -> list[ChatDTO]:
+    async def get_users_chats(self, user: UserDTO) -> list[ChatOverview]:
         """
 
         :param user:
         :return:
         """
-        chats = await self.repository.get_chats_by_user_id(user.id)
+        chats = [chat.to_dto() for chat in await self.repository.get_chats_by_user_id(user.id)]
 
-        return [chat.to_dto() for chat in chats]
+        overviews = [ChatOverview(id=chat.id, last_message=chat.messages[-1] if chat.messages else None) for chat in
+                     chats]
+
+        return overviews

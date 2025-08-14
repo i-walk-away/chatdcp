@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 from src.models.dto.message import MessageDTO
@@ -8,6 +10,11 @@ class ChatDTO(BaseModel):
     id: int
     members: list[UserDTO]
     messages: list[MessageDTO]
+
+
+class ChatOverview(BaseModel):
+    id: int
+    last_message: Optional[MessageDTO]
 
 
 class CreateChatData(BaseModel):
