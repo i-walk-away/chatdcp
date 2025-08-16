@@ -5,7 +5,7 @@ Simple messenger powered by FastAPI & SQLAlchemy.
 ## About this project
 
 This is a backend for a messenger application. It features authorization, group chats
-for any amount of people and simple message exchange. **Three-tier-architecture** is established
+for any amounts of people and simple message exchange. **Three-tier-architecture** is established
 in the source code, simplifying the process of adding new features.
 
 ## Tech Stack
