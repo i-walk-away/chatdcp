@@ -27,3 +27,7 @@ in the source code, simplifying the process of adding new features.
   `alembic upgrade head`
 
 > make sure you check an important note about migrations in [.env.example](.env.example)
+
+## TODO:
+- [ ] Review all docstrings. Add them where there aren't any, improve existing ones. Reformat all API endpoints'
+      docstrings from *reStructuredText* to *markdown*, because SwaggerUI supports markdown docstrings.
