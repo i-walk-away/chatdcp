@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from src.routes import messages, users, auth, chats
+from src.routes import auth, chats, messages, users
 
 app = FastAPI(swagger_ui_parameters={"operationsSorter": "method"})
 

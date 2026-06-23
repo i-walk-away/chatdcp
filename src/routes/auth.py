@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from src.core.dependencies.services.auth_service import get_auth_service
-from src.models.dto.auth import LoginResponse, LoginCredentials
+from src.models.dto.auth import LoginCredentials, LoginResponse
 from src.services.auth_service import AuthService
 
 router = APIRouter(prefix='/auth', tags=['Auth'])

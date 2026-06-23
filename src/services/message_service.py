@@ -1,4 +1,4 @@
-from src.core.exceptions import MessageNotFound, ChatNotFound
+from src.core.exceptions import ChatNotFound, MessageNotFound
 from src.models.db.message import Message
 from src.models.dto.message import MessageDTO, SendMessageData
 from src.models.dto.user import UserDTO

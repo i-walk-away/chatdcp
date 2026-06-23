@@ -1,6 +1,6 @@
 from src.core.exceptions import UserNotFound
 from src.models.db import Chat, User
-from src.models.dto.chat import ChatDTO, CreateChatData, ChatOverview
+from src.models.dto.chat import ChatDTO, ChatOverview, CreateChatData
 from src.models.dto.user import UserDTO
 from src.repositories.chats import ChatRepository
 from src.repositories.users import UserRepository

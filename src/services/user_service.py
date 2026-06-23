@@ -1,7 +1,7 @@
 from src.core.auth_manager import AuthManager
-from src.core.exceptions import UserNotFound, UserAlreadyExists
+from src.core.exceptions import UserAlreadyExists, UserNotFound
 from src.models.db.user import User
-from src.models.dto.user import UserDTO, CreateUserData
+from src.models.dto.user import CreateUserData, UserDTO
 from src.repositories.users import UserRepository
 
 

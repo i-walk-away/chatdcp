@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from src.core.dependencies.security.user import get_user_from_jwt
 from src.core.dependencies.services.message_service import get_message_service
-from src.models.dto.message import SendMessageData, MessageDTO
+from src.models.dto.message import MessageDTO, SendMessageData
 from src.models.dto.user import UserDTO
 from src.services.message_service import MessageService
 

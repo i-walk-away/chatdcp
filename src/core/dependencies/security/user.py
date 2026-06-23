@@ -1,11 +1,11 @@
 from fastapi import Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import decode
 from jwt.exceptions import InvalidTokenError
 
 from cfg.cfg import settings
 from src.core.dependencies.services.user_service import get_user_service
-from src.core.exceptions import UserNotFound, InvalidCredentials
+from src.core.exceptions import InvalidCredentials, UserNotFound
 from src.models.dto.user import UserDTO
 from src.services.user_service import UserService
 
