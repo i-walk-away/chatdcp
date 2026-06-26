@@ -12,6 +12,6 @@ def get_user_service(
         auth_manager: AuthManager = Depends(get_auth_manager)
 ) -> UserService:
     """
-    Constructs an instance of ``UserService`` with ``UserRepository`` injected.
+    Constructs an instance of UserService with UserRepository injected.
     """
     return UserService(repository=repository, auth_manager=auth_manager)

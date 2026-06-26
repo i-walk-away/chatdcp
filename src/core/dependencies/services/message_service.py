@@ -15,8 +15,8 @@ def get_message_service(
         chat_repository: ChatRepository = Depends(get_chat_repository)
 ) -> MessageService:
     """
-    Constructs an instance of ``MessageService`` with ``MessageRepository``
-    and ``UserRepository`` injected.
+    Constructs an instance of MessageService with MessageRepository
+    and UserRepository injected.
     """
     return MessageService(
         repository=repository,

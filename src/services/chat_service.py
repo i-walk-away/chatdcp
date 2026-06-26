@@ -15,9 +15,16 @@ class ChatService:
         self.repository = repository
         self.user_repository = user_repository
 
-    async def create_chat(self, chat_data: CreateChatData, user: UserDTO) -> ChatDTO:
+    async def create_chat(
+            self,
+            chat_data: CreateChatData,
+            user: UserDTO
+    ) -> ChatDTO:
         """
+        Creates a Chat with given members as its participants.
 
+        :param chat_data: DTO containing chat members
+        :param user:
         """
 
         members_ids = list(set(chat_data.members))
@@ -45,10 +52,10 @@ class ChatService:
 
     async def get_by_id(self, chat_id: int) -> ChatDTO:
         """
-        Gets a ``Chat`` by id from the database.
+        Gets a Chat by id from the database.
 
-        :param chat_id: ``Chat`` id
-        :return: ``Chat``
+        :param chat_id: Chat id
+        :return: instance of Chat
         """
         chat = await self.repository.get_by_id(chat_id)
 

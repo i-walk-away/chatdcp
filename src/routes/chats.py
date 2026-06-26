@@ -16,9 +16,10 @@ async def create_chat(
         chat_service: ChatService = Depends(get_chat_service)
 ) -> ChatDTO:
     """
+    Create an instance of Chat.
 
     :param user:
-    :param chat_data:
+    :param chat_data: DTO containing a list of members
     :param chat_service:
     :return:
     """
