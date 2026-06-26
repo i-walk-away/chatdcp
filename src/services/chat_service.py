@@ -63,9 +63,11 @@ class ChatService:
 
     async def get_users_chats(self, user: UserDTO) -> list[ChatOverview]:
         """
+        Get list of chats where the given User is a participant.
 
-        :param user:
-        :return:
+        :param user: given user
+
+        :return: list of chat previews (id and last message)
         """
         chats = [chat.to_dto() for chat in await self.repository.get_chats_by_user_id(user.id)]
 
